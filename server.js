@@ -17,7 +17,7 @@ const sess = {
     db: sequelize,
   }),
 };
-
+const session = require("express-session");
 app.use(session(sess));
 
 app.engine("handlebars", hbs.engine);
