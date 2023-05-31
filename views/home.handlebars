@@ -1,4 +1,4 @@
-<h1 class="home-message">Welcome!</h1>
+<h1 class='home-message'>Welcome!</h1>
 
 {{#each blogposts as |blogpost|}}
   <div class='row mb-4 blogpost'>
@@ -6,11 +6,6 @@
       <h2>
         <a href='/blogposts/{{id}}'>{{title}}</a>
       </h2>
-      <p>
-        {{#each blogpost.comments as |comment|}}
-          <span class='comment'>{{comment}}</span>
-        {{/each}}
-      </p>
       <p>Created by
         {{user.username}}
         on
@@ -21,5 +16,13 @@
         {{body}}
       </p>
     </div>
+
+    <p>
+      {{#each blogpost.comments as |comment|}}
+        <span class='comment'>{{comment.body}}
+          -
+          {{comment.user.username}}</span>
+      {{/each}}
+    </p>
   </div>
 {{/each}}

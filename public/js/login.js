@@ -14,7 +14,7 @@ const loginFormHandler = async (event) => {
     console.log(response);
 
     if (response.ok) {
-      document.location.replace('/');
+      document.location.replace('/dashboard');
     } else {
       alert('Failed to log in');
     }
@@ -29,7 +29,7 @@ const signupFormHandler = async (event) => {
   const password = document.querySelector('#password-signup').value.trim();
 
   if (name && username && password) {
-    const response = await fetch('/api/users/login', {
+    const response = await fetch('/api/users', {
       method: 'POST',
       body: JSON.stringify({ name, username, password }),
       headers: { 'Content-Type': 'application/json' },
@@ -38,7 +38,7 @@ const signupFormHandler = async (event) => {
     console.log(response);
 
     if (response.ok) {
-      document.location.replace('/');
+      document.location.replace('/dashboard');
     } else {
       alert('Failed to log in');
     }
@@ -46,7 +46,7 @@ const signupFormHandler = async (event) => {
 };
 
 document
-  .querySelector('login-button')
+  .querySelector('.login-form')
   .addEventListener('submit', loginFormHandler);
 
 document

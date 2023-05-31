@@ -6,13 +6,19 @@
     <link rel='stylesheet' href='/css/jass.css' />
     <link rel='stylesheet' href='/css/styles.css' />
     <title>Tech Blog</title>
+    <script defer src='./js/logout.js'></script>
   </head>
   <body>
     <nav>
       <ul>
         <li><a href='/'>Home</a></li>
         <li><a href='/dashboard'>Dashboard</a></li>
-        <li><a href='/login'>Login</a></li>
+        <li>{{#if username}}
+            <span id='logout'>Logout</span>
+          {{else}}
+            <a href='/login'>Login</a>
+          {{/if}}
+        </li>
       </ul>
     </nav>
     {{{body}}}

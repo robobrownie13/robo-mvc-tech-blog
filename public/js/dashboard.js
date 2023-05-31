@@ -2,7 +2,7 @@ const newFormHandler = async (event) => {
   event.preventDefault();
 
   const title = document.querySelector('#blogpost-title').value.trim();
-  const body = document.querySelector('#project-desc').value.trim();
+  const body = document.querySelector('#blogpost-body').value.trim();
 
   if (title && body) {
     const response = await fetch(`/api/blogposts`, {
@@ -42,5 +42,5 @@ document
   .addEventListener('submit', newFormHandler);
 
 document
-  .querySelector('.blogpost-list')
+  .querySelector('.delete-button')
   .addEventListener('click', delButtonHandler);

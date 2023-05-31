@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Blogpost } = require('../models');
+const { User, Blogpost, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -11,7 +11,13 @@ router.get('/', async (req, res) => {
           model: User,
           attributes: ['username'],
         },
-        'comments',
+        {
+          model: Comment,
+          include: {
+            model: User,
+            attributes: ['username'],
+          },
+        },
       ],
     });
     // add a map here to get usernames for comments
@@ -20,12 +26,21 @@ router.get('/', async (req, res) => {
     const blogposts = blogpostData.map((blogpost) =>
       blogpost.get({ plain: true })
     );
+
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+    });
+
+    const user = userData ? userData.get({ plain: true }) : {};
+
     // Pass serialized data and session flag into template
     res.render('home', {
       blogposts,
+      ...user,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
+    console.log(err, '--------------');
     res.status(500).json(err);
   }
 });
