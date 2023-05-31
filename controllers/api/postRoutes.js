@@ -2,8 +2,9 @@ const router = require('express').Router();
 const { Blogpost } = require('../../models');
 
 router.get('/', async (req, res) => {
-  const blogpostData = await Blogpost.findAll();
-  console.log(blogpostData);
+  const blogpostData = await Blogpost.findAll({
+    include: ['user', 'comments'],
+  });
 
   if (!blogpostData) {
     return res.status(404).json({ data: null });
@@ -12,15 +13,24 @@ router.get('/', async (req, res) => {
   const blogposts = blogpostData.map((blog) => blog.get({ plain: true }));
   console.log(blogposts);
 
-  res.render('homepage', { blogposts });
+  res.status(200).json(blogposts);
+
+  // alternative to not send user password
+  // const newData = blogposts.map((blog) => {
+  //   return { ...blog, user: blog.user.username };
+  // });
+
+  // res.status(200).json(newData);
 });
 
 router.get('/:id', async (req, res) => {
-  const blogpostData = await Blogpost.findByPk(req.params.id);
+  const blogpostData = await Blogpost.findByPk(req.params.id, {
+    include: ['user', 'comments'],
+  });
 
-  const blogposts = blogpostData.get({ plain: true });
+  const blogpost = blogpostData.get({ plain: true });
 
-  res.render('blogposts', blogposts);
+  res.status(200).json(blogpost);
 });
 
 router.post('/', async (req, res) => {

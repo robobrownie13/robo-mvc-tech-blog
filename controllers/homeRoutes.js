@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const Blogpost = require('../models/Blogpost');
-const User = require('../models/User');
+const { User, Blogpost } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
@@ -12,14 +11,15 @@ router.get('/', async (req, res) => {
           model: User,
           attributes: ['username'],
         },
+        'comments',
       ],
     });
+    // add a map here to get usernames for comments
 
     // Serialize data so the template can read it
     const blogposts = blogpostData.map((blogpost) =>
       blogpost.get({ plain: true })
     );
-
     // Pass serialized data and session flag into template
     res.render('home', {
       blogposts,
@@ -30,9 +30,9 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/blogpost/:id', async (req, res) => {
+router.get('/blogposts/:id', async (req, res) => {
   try {
-    const projectData = await Project.findByPk(req.params.id, {
+    const blogpostData = await Blogpost.findByPk(req.params.id, {
       include: [
         {
           model: User,
@@ -41,10 +41,10 @@ router.get('/blogpost/:id', async (req, res) => {
       ],
     });
 
-    const project = projectData.get({ plain: true });
+    const blogpost = blogpostData.get({ plain: true });
 
     res.render('blogpost', {
-      ...project,
+      ...blogpost,
       logged_in: req.session.logged_in,
     });
   } catch (err) {

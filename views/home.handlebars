@@ -1,15 +1,18 @@
-{{#each blogpost as |blogpost|}}
-  <div class='row mb-4 project'>
+<h1 class="home-message">Welcome!</h1>
+
+{{#each blogposts as |blogpost|}}
+  <div class='row mb-4 blogpost'>
     <div class='col-md-5'>
       <h2>
-        <a href='/project/{{id}}'>{{title}}</a>
+        <a href='/blogposts/{{id}}'>{{title}}</a>
       </h2>
       <p>
-        <span class='comment'>{{comment}}</span>
-        needed!
+        {{#each blogpost.comments as |comment|}}
+          <span class='comment'>{{comment}}</span>
+        {{/each}}
       </p>
       <p>Created by
-        {{user_id}}
+        {{user.username}}
         on
         {{format_date date_created}}</p>
     </div>
