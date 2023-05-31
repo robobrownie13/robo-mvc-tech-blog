@@ -14,7 +14,7 @@ const helpers = require('./utils/helpers');
 const hbs = exphbs.create({ helpers });
 
 const sess = {
-  secret: process.env.SECRET,
+  secret: "robobrownie",
   cookie: {
     maxAge: 300000,
     httpOnly: true,
