@@ -8,7 +8,7 @@
 - [Description](#Description)
 - [Usage](#Usage)
 - [Installation Instructions](#Installation)
-- [Future Development](#Future Development)
+- [Future Development](#Future)
 - [License](#License)
 - [Questions](#Questions)   
 
